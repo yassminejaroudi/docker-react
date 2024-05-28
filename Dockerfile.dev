@@ -1,0 +1,10 @@
+from node:16-alpine
+USER node
+RUN mkdir -p /home/node/app
+workdir /home/node/app
+#copy package.json to be able to install npm
+copy --chown=node:node ./package.json ./
+run npm install
+#copy the source code  from local to container
+copy --chown=node:node ./ ./ 
+cmd ["npm","start"]

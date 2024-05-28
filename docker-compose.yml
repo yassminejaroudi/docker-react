@@ -1,0 +1,19 @@
+version: '3'
+services: #the list of containers we want to create
+  web:
+    build: 
+      context: . #dockerfile inside the working directory
+      dockerfile: Dockerfile.dev #specify which dockerfile to use
+    ports:
+      - "3000:3000" #link local port to container port
+    volumes:
+      - /home/node/app/node_modules
+      - .:/home/node/app #current folder outside the container to app folder inside the container
+  tests: #create another service/container responsible for tests
+    build: 
+      context: . #dockerfile inside the working directory
+      dockerfile: Dockerfile.dev #specify which dockerfile to use
+    volumes:
+      - /home/node/app/node_modules
+      - .:/home/node/app #current folder outside the container to app folder inside the container
+    command: ["npm","run","test"]
