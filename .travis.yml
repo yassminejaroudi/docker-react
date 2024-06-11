@@ -1,0 +1,10 @@
+sudo: required  #super user permissions to execute this build
+services:
+  - docker #install a copy of docker into our running container
+
+before_install: #to execute some commands before our tests are ran
+  - docker build -t /douda/docker-react -f Dockerfile.dev . #we want to build our docker image before the test is ran
+
+script: #contains all the different commands that need to be executed to actually  run our test suite
+  - docker run -e CI=true /douda/docker-react npm run test
+
